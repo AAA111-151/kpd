@@ -1,22 +1,9 @@
 FROM ghcr.io/mhsanaei/3x-ui:latest
 
-USER root
-RUN apk add --no-cache supervisor curl tzdata \
-    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-ARG TARGETARCH
-RUN case "${TARGETARCH}" in \
-      amd64) CLOUDFLARED_URL="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64" ;; \
-      arm64) CLOUDFLARED_URL="https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64" ;; \
-      *) echo "Unsupported arch: ${TARGETARCH}" && exit 1 ;; \
-    esac \
-    && curl -L -o /usr/local/bin/cloudflared "${CLOUDFLARED_URL}" \
-    && chmod +x /usr/local/bin/cloudflared
-
-RUN mkdir -p /var/log/supervisor /etc/supervisor/conf.d
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# 让证书目录也落在 /etc/x-ui 下，实现单卷持久化
+RUN rm -rf /root/cert \
+    && mkdir -p /etc/x-ui/cert \
+    && ln -sfn /etc/x-ui/cert /root/cert
 
 ENV XUI_DB_FOLDER=/etc/x-ui \
     XUI_LOG_FOLDER=/dev/null
-
-ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
