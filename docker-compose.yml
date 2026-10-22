@@ -6,7 +6,7 @@ services:
     container_name: xui
     restart: unless-stopped
     volumes:
-      - /data:/etc/x-ui
+      - xui-data:/etc/x-ui
     environment:
       XUI_DB_FOLDER: /etc/x-ui
       XUI_LOG_FOLDER: /dev/null
