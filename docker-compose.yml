@@ -6,12 +6,13 @@ services:
     container_name: xui
     restart: unless-stopped
     volumes:
-      - xui-data:/etc/x-ui
+      - xui-data:/data
     environment:
-      XUI_DB_FOLDER: /etc/x-ui
+      XUI_DB_FOLDER: /data
       XUI_LOG_FOLDER: /dev/null
     expose:
       - "2053"
-
+      - "2096"
+      - "3333"
 volumes:
-  x-ui-data:
+  xui-data:
