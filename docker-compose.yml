@@ -1,12 +1,17 @@
 services:
-  app:
+  xui:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: app
+    container_name: xui
     restart: unless-stopped
     volumes:
-      - x-ui-db:/etc/x-ui
-      - x-ui-cert:/root/cert
+      - x-ui-data:/etc/x-ui
     environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?TUNNEL_TOKEN is required}
+      XUI_DB_FOLDER: /etc/x-ui
+      XUI_LOG_FOLDER: /dev/null
+    expose:
+      - "2053"
+
+volumes:
+  x-ui-data:
