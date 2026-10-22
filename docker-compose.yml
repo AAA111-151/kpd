@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    volumes:
+      - x-ui-db:/etc/x-ui
+      - x-ui-cert:/root/cert
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?TUNNEL_TOKEN is required}
