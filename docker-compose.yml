@@ -8,11 +8,11 @@ services:
     volumes:
       - xui-data:/data
     environment:
-      XUI_DB_FOLDER: /data
-      XUI_LOG_FOLDER: /dev/null
-    expose:
-      - "2053"
-      - "2096"
-      - "3333"
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?TUNNEL_TOKEN is required}
+      KOMARI_ENDPOINT: ${KOMARI_ENDPOINT:?KOMARI_ENDPOINT is required}
+      KOMARI_TOKEN: ${KOMARI_TOKEN:?KOMARI_TOKEN is required}
+      XUI_PORT: ${XUI_PORT:-2053}
+    # 不写任何 ports:，完全依赖 cloudflared 出站连接，不对外暴露端口
+
 volumes:
   xui-data:
