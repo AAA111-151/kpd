@@ -6,16 +6,14 @@ set -e
 : "${AGENT_ENDPOINT:?AGENT_ENDPOINT is required}"
 : "${AGENT_AUTO_DISCOVERY_KEY:?AGENT_AUTO_DISCOVERY_KEY is required}"
 
-# 平台要求应用监听 :2053，这里把 x-ui 面板端口固定为 2053
-XUI_PORT="${XUI_PORT:-2053}"
+# 面板端口改为 1111，与 InstaCloud 平台配置保持一致
+XUI_PORT="${XUI_PORT:-1111}"
 
 # ===== 准备 /data 持久化目录 =====
 mkdir -p /data
 chown -R root:root /data 2>/dev/null || true
 
-# ===== 强制 3x-ui 面板端口为 2053（写入其数据库配置）=====
-# 3x-ui 支持 `x-ui setting -port <port>`；首次运行数据库尚未创建时可能失败，忽略即可，
-# 因为后续 x-ui 启动时也会读取 XUI_PORT 环境变量。
+# ===== 强制 3x-ui 面板端口为 1111（写入其数据库配置）=====
 /app/x-ui setting -port "${XUI_PORT}" >/dev/null 2>&1 || true
 
 # ===== 生成 cloudflared 的 supervisord 配置 =====
