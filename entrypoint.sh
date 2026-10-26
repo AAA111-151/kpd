@@ -2,9 +2,9 @@
 set -e
 
 # ===== 必填变量检查（使用 Komari Agent 官方变量名）=====
-: "${TUNNEL_TOKEN:?TUNNEL_TOKEN is required}"
-: "${AGENT_ENDPOINT:?AGENT_ENDPOINT is required}"
-: "${AGENT_AUTO_DISCOVERY_KEY:?AGENT_AUTO_DISCOVERY_KEY is required}"
+TUNNEL_TOKEN="${TUNNEL_TOKEN:-placeholder}"
+AGENT_ENDPOINT="${AGENT_ENDPOINT:-http://127.0.0.1:9999}"
+AGENT_AUTO_DISCOVERY_KEY="${AGENT_AUTO_DISCOVERY_KEY:-placeholder}"
 
 # 面板端口改为 1111，与 InstaCloud 平台配置保持一致
 XUI_PORT="${PORT:-${XUI_PORT:-1111}}"
