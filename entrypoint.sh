@@ -7,7 +7,7 @@ set -e
 : "${AGENT_AUTO_DISCOVERY_KEY:?AGENT_AUTO_DISCOVERY_KEY is required}"
 
 # 面板端口改为 1111，与 InstaCloud 平台配置保持一致
-XUI_PORT="${XUI_PORT:-1111}"
+XUI_PORT="${PORT:-${XUI_PORT:-1111}}"
 
 # ===== 准备 /data 持久化目录 =====
 mkdir -p /data
